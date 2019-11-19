@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'parsenews',
+    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,9 @@ TEMPLATES = [
             ],
         },
     },
+]
+CRON_CLASSES = [
+    'parsenews.cron.NewsUpdateJob',
 ]
 
 WSGI_APPLICATION = 'NewsParser.wsgi.application'
