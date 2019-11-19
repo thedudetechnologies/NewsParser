@@ -12,7 +12,7 @@ def home(request):
     URL = 'https://news.google.com/rss/search?pz=1&cf=all&q=nse$&hl=en-IN&gl=IN&ceid=IN:en' 
 
     feed = fp.parse(URL)
-    newsdb = News.objects.all()
+    newsdb = News.objects.all().order_by('-id')
 
     viewdict = dict()
     for post in feed.entries:
@@ -27,7 +27,7 @@ def home(request):
         summary = post.summary
         # lst = [title,link,nid,published,summary]
         
-        # news_instance = News.objects.create(title=title,link=link,nid=nid,published=published,summary=summary)
+        news_instance = News.objects.create(title=title,link=link,nid=nid,published=published,summary=summary)
         viewdict = {
             'news' : newsdb
         }
