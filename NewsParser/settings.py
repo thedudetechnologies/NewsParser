@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
+from __future__ import absolute_import
 import os
+from datetime import timedelta
+import djcelery
+import celery
+from celery import *
+from celery import Celery
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,7 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'parsenews',
     'django_cron',
+    # 'django_celery_beat'
+    'djcelery',
 ]
+
+djcelery.setup_loader()
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,6 +82,18 @@ TEMPLATES = [
 CRON_CLASSES = [
     'parsenews.cron.NewsUpdateJob',
 ]
+CELERYBEAT_SCHEDULE = {
+    'first_task': {
+        'task': 'parsenews.tasks.task',
+        'schedule': timedelta(minutes=5)
+    },
+}
+# CELERY STUFF
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 WSGI_APPLICATION = 'NewsParser.wsgi.application'
 
@@ -89,6 +112,7 @@ DATABASES = {
     }
 
 }
+
 
 
 # Password validation

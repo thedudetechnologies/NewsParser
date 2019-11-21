@@ -136,10 +136,10 @@
     </header>
     <!-- ##### Header Area End ##### -->
     {% for i in news %}
-    <h5>Title :{{i.title}}</h5><br>
+    <h5>Title :{{i.title}}</h5>
+    <span>Date : {{i.published}}</span><br>
     <span>Link :<a href='{{i.link}}'>click here to know more</a></span><br>
     <span>NewsID : {{i.nid}}</span><br>
-    <span>Date : {{i.published}}</span><br>
     <span>Summary : {{i.summary}}</span><br>
     {%endfor%}
     <!-- ##### Breaking News Area Start ##### -->
